@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#82EC19</color>
+    <color name="colorPrimaryDark">#1EF60E</color>
+    <color name="colorAccent">#73AC55</color>
+    <color name="water">#add8e6</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="nutrients">#8BC34A</color>
+    <color name="sunlight">#FFEB3B</color>
+    <color name="repot">#FF9800</color>
+</resources>
