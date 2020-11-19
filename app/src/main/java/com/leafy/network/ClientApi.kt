@@ -7,7 +7,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 
-private const val BASE_URL = ""
+private const val BASE_URL = "https://leafy-backend.herokuapp.com/graphql"
 
 private val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
