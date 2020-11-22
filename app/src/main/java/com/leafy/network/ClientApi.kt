@@ -1,13 +1,14 @@
 package com.leafy.network
 
 import androidx.lifecycle.LiveData
+import com.leafy.models.PlantUnit
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 
-private const val BASE_URL = "https://leafy-backend.herokuapp.com/graphql"
+private const val BASE_URL = "https://us-central1-amiable-hydra-279814.cloudfunctions.net/mikrokosmos/api/read"
 
 private val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
@@ -20,10 +21,8 @@ private val retrofit = Retrofit.Builder()
     .build()
 
 interface LeafyApiService {
-    /*
     @GET("/")
-    fun getPosts(): LiveData<ApiResponse<List<..>>>
-    */
+    fun getPlantUnits(): LiveData<ApiResponse<List<PlantUnit>>>
 }
 
 object ClientApi {

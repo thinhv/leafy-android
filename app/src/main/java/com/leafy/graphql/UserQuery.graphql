@@ -1,3 +1,5 @@
+package com.leafy.graphql
+
 query UserQuery($username: String!, $password: String!) {
     login(username: $username, password: $password) {
         id,
