@@ -13,4 +13,7 @@ class UserViewModel: ViewModel() {
         mutableIsLoggedIn.value = true
         isLoggedIn = mutableIsLoggedIn
     }
+
+    fun login() {
+    }
 }

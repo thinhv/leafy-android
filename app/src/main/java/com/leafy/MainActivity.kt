@@ -20,12 +20,19 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        uesrViewModel.isLoggedIn.observe(this, {
+            if (it) {
+                setFragment(RootFragment())
+            } else {
+                setFragment(LoginAndRegisterFragment())
+            }
+        })
     }
 
     private fun setFragment(fragment: Fragment) {
         val fm = supportFragmentManager
         val tr = fm.beginTransaction()
-        tr.add(R.id.fragment_container, RootFragment())
+        tr.add(R.id.fragment_container, fragment)
         tr.commitAllowingStateLoss()
     }
 }
