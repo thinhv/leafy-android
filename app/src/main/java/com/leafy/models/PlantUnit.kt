@@ -7,7 +7,7 @@ data class PlantUnit(
     @field:SerializedName("id")
     val id: String,
     @field:SerializedName("data")
-    val data: Map<Any, Any>,
+    val data: PlantUnitData,
     @field:SerializedName("publishTime")
-    val publishTime: String
+    val publishTime: Date
 )
