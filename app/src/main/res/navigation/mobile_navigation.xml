@@ -14,12 +14,12 @@
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.leafy.ui.dashboard.DashboardFragment"
-        android:label="@string/title_feeds"
+        android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.leafy.ui.notifications.NotificationsFragment"
+        android:name="com.leafy.ui.achievements.AchievementsFragment"
         android:label="@string/Achievements"
         tools:layout="@layout/fragment_notifications" />
 </navigation>

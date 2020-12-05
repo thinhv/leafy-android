@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Leafy</string>
     <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
     <string name="title_feeds">Feeds</string>
     <string name="Achievements">Achievements</string>
 </resources>

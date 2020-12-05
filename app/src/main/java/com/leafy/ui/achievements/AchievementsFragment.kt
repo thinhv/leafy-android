@@ -1,4 +1,4 @@
-package com.leafy.ui.notifications
+package com.leafy.ui.achievements
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,21 +10,29 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.leafy.R
 
-class NotificationsFragment : Fragment() {
+class AchievementsFragment : Fragment() {
 
-    private lateinit var notificationsViewModel: NotificationsViewModel
+    private lateinit var viewModel: AchievementsViewModel
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        notificationsViewModel =
-                ViewModelProviders.of(this).get(NotificationsViewModel::class.java)
+        viewModel =
+                ViewModelProviders.of(this).get(AchievementsViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_notifications, container, false)
         val textView: TextView = root.findViewById(R.id.text_notifications)
-        notificationsViewModel.text.observe(viewLifecycleOwner, Observer {
+        viewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
+        })
+
+        viewModel.plantUnits.observe(viewLifecycleOwner, Observer {
+            print("-----------")
+            print(it.message)
+            print(it.data)
+            print(it.data?.size)
+            print("-----------")
         })
         return root
     }

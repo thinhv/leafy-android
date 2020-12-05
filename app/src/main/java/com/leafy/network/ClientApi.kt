@@ -8,7 +8,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 
-private const val BASE_URL = "https://us-central1-amiable-hydra-279814.cloudfunctions.net/mikrokosmos/api/read"
+private const val BASE_URL = "https://us-central1-amiable-hydra-279814.cloudfunctions.net/mikrokosmos/api/"
 
 private val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
@@ -21,7 +21,7 @@ private val retrofit = Retrofit.Builder()
     .build()
 
 interface LeafyApiService {
-    @GET("/")
+    @GET("read")
     fun getPlantUnits(): LiveData<ApiResponse<List<PlantUnit>>>
 }
 
