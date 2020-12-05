@@ -1,8 +1,0 @@
-mutation {
-    registerUser(username: "nhim", email: "nhim@gmail.com", password: "test12", firstName: "Ngoc", lastName: "Doan") {
-        username,
-        email,
-        firstName,
-        lastName
-    }
-}

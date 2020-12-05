@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.apollographql.apollo'
 
 android {
     compileSdkVersion 30
@@ -65,4 +66,9 @@ dependencies {
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$version_moshi"
 
     implementation 'com.google.code.gson:gson:2.2.+'
+}
+
+apollo {
+    // instruct the compiler to generate Kotlin models
+    generateKotlinModels.set(true)
 }
