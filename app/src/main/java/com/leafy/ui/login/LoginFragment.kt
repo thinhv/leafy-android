@@ -37,7 +37,7 @@ class LoginFragment : Fragment() {
             var errorMessages: String? = null
 
             if (username.isEmpty()) {
-                errorMessages = "Username or Email is needed"
+                errorMessages = "Username is needed"
             } else if (password.isEmpty()) {
                 errorMessages = "Password is needed"
             }

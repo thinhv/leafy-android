@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.leafy">
     <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -19,6 +23,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.plantunitdetails.PlantUnitDetailsActivity"></activity>
+        <activity android:name=".ui.addplant.AddPlantActivity"></activity>
     </application>
 
 </manifest>
