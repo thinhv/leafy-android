@@ -29,7 +29,7 @@
                 android:layout_margin="8dp"
                 android:layout_marginBottom="12dp"
                 android:text="On"
-                android:textColor="@color/black"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="20dp" />
 
             <TextView

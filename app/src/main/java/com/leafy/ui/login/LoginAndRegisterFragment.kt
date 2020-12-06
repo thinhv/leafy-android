@@ -21,8 +21,9 @@ class LoginAndRegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val adapter = AuthenticationPagerAdapter(requireActivity().supportFragmentManager)
-        adapter.addFragment(LoginFragment())
         adapter.addFragment(RegisterFragment())
+        adapter.addFragment(LoginFragment())
+
         viewPager.adapter = adapter
     }
 }

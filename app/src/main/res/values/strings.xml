@@ -4,12 +4,12 @@
     <string name="title_me">Me</string>
     <string name="title_feeds">Feeds</string>
     <string name="Achievements">Achievements</string>
-    <string name="swipe_left_for_register">Swipe Left for Register</string>
+    <string name="swipe_right_for_register">Swipe Right for Register</string>
     <string name="login">Login</string>
     <string name="password">Password</string>
     <string name="e_mail">Email</string>
     <string name="tag">Let\'s join us and \nBuild your garden!</string>
-    <string name="swipe_right_for_login">Swipe Right for Login</string>
+    <string name="swipe_left_for_login">Swipe Left for Login</string>
     <string name="register">Register</string>
     <string name="re_type_password">Re-type Password</string>
     <string name="first_name">First Name</string>

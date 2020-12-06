@@ -102,7 +102,7 @@
             android:id="@+id/swipeLeft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/swipe_right_for_login"
+            android:text="@string/swipe_left_for_login"
             android:textSize="15sp"
             android:fontFamily="@font/roboto_regular"
             android:layout_centerHorizontal="true"

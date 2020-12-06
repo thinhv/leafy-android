@@ -31,7 +31,7 @@ class UnitsListAdapter(private val onClickPlantUnitItemListener: OnClickPlantUni
 
     override fun onBindViewHolder(holder: PlanUnitItemViewHolder, position: Int) {
         val item = items[position]
-        holder.view.plant_unit_name_textview.text = "Unit " + item.id
+        holder.view.plant_unit_name_textview.text = item.name.toString()
         holder.view.plant_unit_date_textview.text = item.publishTime.toString()
         holder.view.setOnClickListener {
             onClickPlantUnitItemListener.onClickPlanUnitItem(item)
