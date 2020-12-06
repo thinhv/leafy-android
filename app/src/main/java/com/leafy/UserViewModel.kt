@@ -15,6 +15,10 @@ class UserViewModel: ViewModel() {
         return userRepository.login(username, password)
     }
 
+    fun register(username: String, email: String, password: String): LiveData<Resource<RegisterUserMutation.RegisterUser>> {
+        return userRepository.register(username = username, email = email, password = password)
+    }
+
     fun logout() {
 
     }

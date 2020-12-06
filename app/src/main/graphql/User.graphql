@@ -4,3 +4,11 @@ query User($username: String!, $password: String!) {
         token
     }
 }
+
+mutation RegisterUser($username: String!, $email: String!, $password: String!, $firstName: String!, $lastName: String!){
+    registerUser(username: $username, email: $email, password: $password, firstName: $firstName, lastName: $lastName) {
+        token,
+        username,
+        email
+    }
+}

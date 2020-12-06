@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var uesrViewModel: UserViewModel
     private var currentFragment: Fragment? = null
+    private var isLoggedIn: Boolean? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +25,8 @@ class MainActivity : AppCompatActivity() {
 
         uesrViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
         uesrViewModel.isLoggedIn.observe(this, {
+            if (isLoggedIn != null && isLoggedIn == it) {  return@observe }
+            isLoggedIn = it
             if (it) {
                 setFragment(RootFragment())
             } else {

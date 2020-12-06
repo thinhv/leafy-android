@@ -1,60 +1,76 @@
 package com.leafy.ui.login
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.snackbar.Snackbar
 import com.leafy.R
+import com.leafy.UserViewModel
+import com.leafy.repository.Resource
+import com.leafy.repository.Status
+import kotlinx.android.synthetic.main.fragment_register.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [RegisterFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class RegisterFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var userViewModel: UserViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+        userViewModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
         return inflater.inflate(R.layout.fragment_register, container, false)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment RegisterFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            RegisterFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        btn_register.setOnClickListener {
+            val email = et_email.text.toString()
+            val username = et_username.text.toString()
+            val password = et_password.text.toString()
+
+            var errorMessages: String? = null
+
+            if (username.isEmpty()) {
+                errorMessages = "Username is needed!"
             }
+
+            if (email.isEmpty()) {
+                errorMessages = "Email is needed!"
+            }
+
+            if (password.isEmpty()) {
+                errorMessages = "Password is needed!"
+            }
+
+            if (errorMessages != null) {
+                Snackbar.make(view, errorMessages, Snackbar.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
+            userViewModel.register(username = username, email = email, password = password).observe(viewLifecycleOwner, Observer {
+                when (it.status) {
+
+                    Status.ERROR -> {
+                       btn_register.isEnabled = true
+                       Snackbar.make(view, it.message ?: "", Snackbar.LENGTH_LONG).show()
+                    }
+
+                    Status.LOADING -> {
+                        btn_register.isEnabled = false
+                    }
+
+                    Status.SUCCESS -> {
+                        btn_register.isEnabled = true
+                        Snackbar.make(view, "Register successfully!", Snackbar.LENGTH_LONG).show()
+                    }
+                }
+            })
+        }
     }
 }
