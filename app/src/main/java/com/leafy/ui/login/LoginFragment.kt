@@ -1,11 +1,13 @@
 package com.leafy.ui.login
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.leafy.R
 import com.leafy.UserViewModel
@@ -28,7 +30,9 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         btn_login.setOnClickListener {
-            userViewModel.login()
+            userViewModel.login(username = et_email.text.toString(), password = et_password.text.toString()).observe(viewLifecycleOwner, Observer {
+                Log.d("Testing something", it.data?.id ?: "No id")
+            })
         }
     }
 }

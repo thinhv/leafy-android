@@ -1,20 +1,21 @@
 package com.leafy
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.leafy.repository.Resource
+import com.leafy.repository.UserRepositoryImpl
 
 class UserViewModel: ViewModel() {
     val isLoggedIn: LiveData<Boolean>
-        get() = mutableIsLoggedIn
+        get() = userRepository.isLoggedIn
 
-    private val mutableIsLoggedIn = MutableLiveData<Boolean>()
+    private val userRepository = UserRepositoryImpl()
 
-    init {
-        mutableIsLoggedIn.value = false
+    fun login(username: String, password: String): LiveData<Resource<UserQuery.Login>> {
+        return userRepository.login(username, password)
     }
 
-    fun login() {
-        mutableIsLoggedIn.value = true
+    fun logout() {
+
     }
 }
