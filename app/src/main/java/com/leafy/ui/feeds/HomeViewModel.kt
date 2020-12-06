@@ -1,4 +1,4 @@
-package com.leafy.ui.home
+package com.leafy.ui.feeds
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

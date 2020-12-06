@@ -1,4 +1,4 @@
-package com.leafy.ui.home
+package com.leafy.ui.me
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,22 +10,20 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.leafy.R
-import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_me.*
 
-class HomeFragment : Fragment() {
+class MeFragment : Fragment() {
 
-    private lateinit var homeViewModel: HomeViewModel
-    private lateinit var postListAdapter: PostListAdapter
+    private lateinit var dashboardSViewModel: MeViewModel
+    private lateinit var adapter: DashboardListAdapter
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_home, container, false)
-
+        dashboardSViewModel = ViewModelProviders.of(this).get(MeViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_me, container, false)
         return root
     }
 
@@ -36,21 +34,21 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        homeViewModel.posts.observe(viewLifecycleOwner, Observer {
-            postListAdapter.posts = it
+        dashboardSViewModel.items.observe(viewLifecycleOwner, Observer {
+            adapter.items = it
         })
     }
 
     private fun setupAdapter() {
-        postListAdapter = PostListAdapter()
+        adapter = DashboardListAdapter()
         val layoutManager = LinearLayoutManager(activity)
-        post_list_rc.layoutManager = layoutManager
-        post_list_rc.addItemDecoration(
+        plant_list_rc.layoutManager = layoutManager
+        plant_list_rc.addItemDecoration(
             DividerItemDecoration(
                 activity,
                 layoutManager.orientation
             )
         )
-        post_list_rc.adapter = postListAdapter
+        plant_list_rc.adapter = adapter
     }
 }

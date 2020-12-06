@@ -1,33 +1,31 @@
-package com.leafy.ui.dashboard
+package com.leafy.ui.feeds
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.leafy.R
-import com.leafy.ui.home.PostListAdapter
-import kotlinx.android.synthetic.main.fragment_dashboard.*
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_home.post_list_rc
+import kotlinx.android.synthetic.main.fragment_feeds.*
 
-class DashboardFragment : Fragment() {
+class FeedsFragment : Fragment() {
 
-    private lateinit var dashboardViewModel: DashboardViewModel
-    private lateinit var adapter: DashboardListAdapter
+    private lateinit var homeViewModel: HomeViewModel
+    private lateinit var postListAdapter: PostListAdapter
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        dashboardViewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
+        homeViewModel =
+                ViewModelProviders.of(this).get(HomeViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_feeds, container, false)
+
         return root
     }
 
@@ -38,21 +36,21 @@ class DashboardFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        dashboardViewModel.items.observe(viewLifecycleOwner, Observer {
-            adapter.items = it
+        homeViewModel.posts.observe(viewLifecycleOwner, Observer {
+            postListAdapter.posts = it
         })
     }
 
     private fun setupAdapter() {
-        adapter = DashboardListAdapter()
+        postListAdapter = PostListAdapter()
         val layoutManager = LinearLayoutManager(activity)
-        plant_list_rc.layoutManager = layoutManager
-        plant_list_rc.addItemDecoration(
+        post_list_rc.layoutManager = layoutManager
+        post_list_rc.addItemDecoration(
             DividerItemDecoration(
                 activity,
                 layoutManager.orientation
             )
         )
-        plant_list_rc.adapter = adapter
+        post_list_rc.adapter = postListAdapter
     }
 }

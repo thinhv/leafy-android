@@ -3,23 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_units">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.leafy.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/navigation_feeds"
+        android:name="com.leafy.ui.feeds.FeedsFragment"
+        android:label="@string/title_feeds"
+        tools:layout="@layout/fragment_feeds" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.leafy.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_units"
+        android:name="com.leafy.ui.units.UnitsFragment"
+        android:label="@string/title_units"
+        tools:layout="@layout/fragment_units" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.leafy.ui.achievements.AchievementsFragment"
-        android:label="@string/Achievements"
-        tools:layout="@layout/fragment_achievements" />
+        android:id="@+id/navigation_me"
+        android:name="com.leafy.ui.me.MeFragment"
+        android:label="@string/title_me"
+        tools:layout="@layout/fragment_me" />
 </navigation>

@@ -1,4 +1,4 @@
-package com.leafy.ui.home
+package com.leafy.ui.feeds
 
 import android.view.LayoutInflater
 import android.view.View

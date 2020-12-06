@@ -1,4 +1,4 @@
-package com.leafy.ui.achievements
+package com.leafy.ui.units
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.leafy.R
 import com.leafy.models.PlantUnit
-import kotlinx.android.synthetic.main.dashboard_item_view.view.*
 import kotlinx.android.synthetic.main.plant_unit_item_view.view.*
 
 interface OnClickPlantUnitItemListener {
@@ -15,7 +14,7 @@ interface OnClickPlantUnitItemListener {
 
 class PlanUnitItemViewHolder(val view: View): RecyclerView.ViewHolder(view)
 
-class AchievementsListAdapter(private val onClickPlantUnitItemListener: OnClickPlantUnitItemListener): RecyclerView.Adapter<PlanUnitItemViewHolder>() {
+class UnitsListAdapter(private val onClickPlantUnitItemListener: OnClickPlantUnitItemListener): RecyclerView.Adapter<PlanUnitItemViewHolder>() {
     var items = listOf<PlantUnit>()
         set(value) {
             field = value
@@ -32,7 +31,7 @@ class AchievementsListAdapter(private val onClickPlantUnitItemListener: OnClickP
 
     override fun onBindViewHolder(holder: PlanUnitItemViewHolder, position: Int) {
         val item = items[position]
-        holder.view.plant_unit_name_textview.text = item.id
+        holder.view.plant_unit_name_textview.text = "Unit " + item.id
         holder.view.plant_unit_date_textview.text = item.publishTime.toString()
         holder.view.setOnClickListener {
             onClickPlantUnitItemListener.onClickPlanUnitItem(item)
