@@ -2,11 +2,16 @@ package com.leafy.repository
 
 import RegisterUserMutation
 import UserQuery
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.Transformations
 import com.apollographql.apollo.ApolloCall
 import com.apollographql.apollo.exception.ApolloException
+import com.leafy.LeafyApplication
+import com.leafy.db.LeafyDB
+import com.leafy.db.entities.UserData
 import com.leafy.models.User
 import com.leafy.services.Apollo
 
@@ -20,19 +25,28 @@ interface UserRepository {
 
 class UserRepositoryImpl: UserRepository {
     private val apollo = Apollo.apolloClient
-
+    private val database: LeafyDB = LeafyDB.getInstance(LeafyApplication.context)
     private val mutableLoginUser: MutableLiveData<Resource<UserQuery.Login>> = MutableLiveData(Resource.loading(null))
     private val mutableRegisterUser: MutableLiveData<Resource<RegisterUserMutation.RegisterUser>> = MutableLiveData(Resource.loading(null))
+    private val localUserData: LiveData<UserData?> = Transformations.map(database.userDataDao().getAll(), {
+        if (it.isEmpty()) {
+            return@map null
+        }
+        return@map it.first()
+    })
 
     override val isLoggedIn: LiveData<Boolean>
-        get() = Transformations.map(mutableLoginUser, {
-            return@map it.data?.token != null
+        get() = Transformations.map(localUserData, {
+            return@map it != null
         })
 
     override val token: LiveData<String?>
         get() = Transformations.map(mutableLoginUser, {
             return@map it.data?.token
         })
+
+    init {
+    }
 
     override fun login(username: String, password: String): LiveData<Resource<UserQuery.Login>> {
         mutableLoginUser.value = Resource.loading(null)
@@ -45,7 +59,13 @@ class UserRepositoryImpl: UserRepository {
             override fun onResponse(response: com.apollographql.apollo.api.Response<UserQuery.Data>) {
                 response.errors?.let {
                     mutableLoginUser.postValue(Resource.error(it.first().message, null))
-                } ?: mutableLoginUser.postValue(Resource.success(response.data?.login))
+                } ?: {
+                    mutableLoginUser.postValue(Resource.success(response.data?.login))
+                    database.userDataDao().deleteAll()
+                    response.data?.login?.let {
+                        database.userDataDao().insert(UserData(token = it.token ?: "", userId = it.id))
+                    }
+                }()
             }
         })
 
@@ -70,6 +90,6 @@ class UserRepositoryImpl: UserRepository {
     }
 
     override fun logout() {
-
+        database.userDataDao().deleteAll()
     }
 }

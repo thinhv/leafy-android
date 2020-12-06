@@ -2,21 +2,23 @@ package com.leafy.db
 
 import android.content.Context
 import androidx.room.Database
-/*
+
 import androidx.room.Room
 import androidx.room.RoomDatabase
-*/
-/*
+import com.leafy.db.daos.UserDataDao
+import com.leafy.db.entities.UserData
+
 @Database(
-    entities = [],
+    entities = [UserData::class],
     version = 3,
     exportSchema = false
 )
 
 abstract class LeafyDB : RoomDatabase() {
 
-    companion object {
+    abstract fun userDataDao(): UserDataDao
 
+    companion object {
         @Volatile
         private var INSTANCE: LeafyDB? = null
 
@@ -41,4 +43,3 @@ abstract class LeafyDB : RoomDatabase() {
         }
     }
 }
-*/
