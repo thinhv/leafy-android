@@ -22,4 +22,8 @@ class UserViewModel: ViewModel() {
     fun logout() {
         return userRepository.logout()
     }
+
+    fun getProfile(): LiveData<Resource<UserProfileQuery.UserProfile>> {
+        return userRepository.getProfile()
+    }
 }

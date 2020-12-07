@@ -1,7 +1,8 @@
 query User($username: String!, $password: String!) {
     login(username: $username, password: $password) {
         id,
-        token
+        token,
+        username
     }
 }
 
@@ -11,4 +12,17 @@ mutation RegisterUser($username: String!, $email: String!, $password: String!, $
         username,
         email
     }
+}
+
+query UserProfile($username: String!) {
+    userProfile(username: $username) {
+        user {
+            username
+            profileImageUrl
+        }
+        plants {
+            _id
+            imageUrl
+        }
+    }
 }

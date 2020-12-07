@@ -11,5 +11,7 @@ data class UserData(
     @ColumnInfo(name = "token")
     val token: String,
     @ColumnInfo(name = "userid")
-    val userId: String
+    val userId: String,
+    @ColumnInfo(name = "username")
+    val username: String
 )

@@ -1,6 +1,7 @@
 package com.leafy.repository
 
 import RegisterUserMutation
+import UserProfileQuery
 import UserQuery
 import android.app.Application
 import androidx.lifecycle.LiveData
@@ -21,6 +22,7 @@ interface UserRepository {
     fun login(username: String, password: String): LiveData<Resource<UserQuery.Login>>
     fun register(username: String, email: String, password: String): LiveData<Resource<RegisterUserMutation.RegisterUser>>
     fun logout()
+    fun getProfile(): LiveData<Resource<UserProfileQuery.UserProfile>>
 }
 
 class UserRepositoryImpl: UserRepository {
@@ -28,6 +30,7 @@ class UserRepositoryImpl: UserRepository {
     private val database: LeafyDB = LeafyDB.getInstance(LeafyApplication.context)
     private val mutableLoginUser: MutableLiveData<Resource<UserQuery.Login>> = MutableLiveData(Resource.loading(null))
     private val mutableRegisterUser: MutableLiveData<Resource<RegisterUserMutation.RegisterUser>> = MutableLiveData(Resource.loading(null))
+    private val mutableUserProfile: MutableLiveData<Resource<UserProfileQuery.UserProfile>> = MutableLiveData(Resource.loading(null))
     private val localUserData: LiveData<UserData?> = Transformations.map(database.userDataDao().getAll(), {
         if (it.isEmpty()) {
             return@map null
@@ -63,7 +66,7 @@ class UserRepositoryImpl: UserRepository {
                     mutableLoginUser.postValue(Resource.success(response.data?.login))
                     database.userDataDao().deleteAll()
                     response.data?.login?.let {
-                        database.userDataDao().insert(UserData(token = it.token ?: "", userId = it.id))
+                        database.userDataDao().insert(UserData(token = it.token ?: "", userId = it.id, username = it.username))
                     }
                 }()
             }
@@ -91,5 +94,25 @@ class UserRepositoryImpl: UserRepository {
 
     override fun logout() {
         database.userDataDao().deleteAll()
+    }
+
+    override fun getProfile(): LiveData<Resource<UserProfileQuery.UserProfile>> {
+        mutableUserProfile.value = Resource.loading(null)
+        val query = UserProfileQuery(username = "nhim")
+        apollo.query(query).enqueue(object : ApolloCall.Callback<UserProfileQuery.Data>() {
+            override fun onFailure(e: ApolloException) {
+                mutableUserProfile.postValue(Resource.error(e.message ?: "Unknown Error", null))
+            }
+
+            override fun onResponse(response: com.apollographql.apollo.api.Response<UserProfileQuery.Data>) {
+                response.errors?.let {
+                    mutableUserProfile.postValue(Resource.error(it.first().message, null))
+                } ?: {
+                    mutableUserProfile.postValue(Resource.success(response.data?.userProfile))
+
+                }()
+            }
+        })
+        return mutableUserProfile
     }
 }
