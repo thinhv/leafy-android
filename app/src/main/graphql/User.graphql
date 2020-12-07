@@ -23,6 +23,9 @@ query UserProfile($username: String!) {
         plants {
             _id
             imageUrl
+            user {
+                username
+            }
         }
     }
 }

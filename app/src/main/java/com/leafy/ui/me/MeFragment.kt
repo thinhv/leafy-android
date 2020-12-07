@@ -1,33 +1,30 @@
 package com.leafy.ui.me
 
-import android.content.Intent
-import android.graphics.Bitmap
+import GetPlantsQuery
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.leafy.R
 import com.leafy.UserViewModel
-import com.leafy.models.User
-import com.leafy.repository.Resource
-import com.leafy.ui.addplant.AddPlantActivity
+import com.leafy.ui.feeds.PostListAdapter
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.fragment_feeds.*
 import kotlinx.android.synthetic.main.fragment_me.*
-import kotlinx.android.synthetic.main.fragment_register.*
 
 
 class MeFragment : Fragment() {
 
     private lateinit var meViewModel: MeViewModel
     private lateinit var userViewModel: UserViewModel
-    private lateinit var adapter: DashboardListAdapter
+    private lateinit var postListAdapter: UserPostListAdapter
     private val picId = 123
 
 
@@ -45,16 +42,14 @@ class MeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
 //        button_add.setOnClickListener {
 //            activity?.let {
 //                val add_plant_intent = Intent(it, AddPlantActivity::class.java)
 //                it.startActivity(add_plant_intent)
 //            }
 //        }
-//        setupAdapter()
-//        setupObservers()
+        setupAdapter()
+        setupObservers()
 
         button_logout.setOnClickListener {
             userViewModel.logout()
@@ -68,22 +63,22 @@ class MeFragment : Fragment() {
         })
     }
 
-//    private fun setupObservers() {
-//        meViewModel.items.observe(viewLifecycleOwner, Observer {
-//            adapter.items = it
-//        })
-//    }
+    private fun setupObservers() {
+        userViewModel.getProfile().observe(viewLifecycleOwner, Observer {
+            postListAdapter.posts = it.data?.plants ?: listOf()
+        })
+    }
 
-//    private fun setupAdapter() {
-//        adapter = DashboardListAdapter()
-//        val layoutManager = LinearLayoutManager(activity)
-//        plant_list_rc.layoutManager = layoutManager
-//        plant_list_rc.addItemDecoration(
-//            DividerItemDecoration(
-//                activity,
-//                layoutManager.orientation
-//            )
-//        )
-//        plant_list_rc.adapter = adapter
-//    }
+    private fun setupAdapter() {
+        postListAdapter = UserPostListAdapter()
+        val layoutManager = LinearLayoutManager(activity)
+        user_post_list_rc.layoutManager = layoutManager
+        user_post_list_rc.addItemDecoration(
+            DividerItemDecoration(
+                activity,
+                layoutManager.orientation
+            )
+        )
+        user_post_list_rc.adapter = postListAdapter
+    }
 }

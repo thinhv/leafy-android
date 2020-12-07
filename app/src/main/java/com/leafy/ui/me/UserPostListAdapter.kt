@@ -1,4 +1,4 @@
-package com.leafy.ui.feeds
+package com.leafy.ui.me
 
 import android.net.Uri
 import android.view.LayoutInflater
@@ -11,8 +11,8 @@ import kotlinx.android.synthetic.main.post_item_view.view.*
 
 class PostItemViewHolder(val view: View): RecyclerView.ViewHolder(view)
 
-class PostListAdapter(): RecyclerView.Adapter<PostItemViewHolder>() {
-    var posts = listOf<GetPlantsQuery.Plant?>()
+class UserPostListAdapter(): RecyclerView.Adapter<PostItemViewHolder>() {
+    var posts = listOf<UserProfileQuery.Plant?>()
         set(value) {
             field = value
             notifyDataSetChanged()
