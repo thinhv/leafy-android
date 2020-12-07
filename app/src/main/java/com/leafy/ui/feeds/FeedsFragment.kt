@@ -36,8 +36,8 @@ class FeedsFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        homeViewModel.posts.observe(viewLifecycleOwner, Observer {
-            postListAdapter.posts = it
+        homeViewModel.loadPost().observe(viewLifecycleOwner, Observer {
+            postListAdapter.posts = it.data ?: listOf<GetPlantsQuery.Plant?>()
         })
     }
 

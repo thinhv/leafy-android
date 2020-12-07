@@ -1,0 +1,11 @@
+query GetPlants {
+    plants {
+        imageUrl,
+        description,
+        likedByUsers,
+        user {
+            username
+        }
+        createdAt
+    }
+}

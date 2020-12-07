@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.post_item_view.view.*
 class PostItemViewHolder(val view: View): RecyclerView.ViewHolder(view)
 
 class PostListAdapter(): RecyclerView.Adapter<PostItemViewHolder>() {
-    var posts = listOf<Post>()
+    var posts = listOf<GetPlantsQuery.Plant?>()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -21,9 +21,9 @@ class PostListAdapter(): RecyclerView.Adapter<PostItemViewHolder>() {
 
     override fun onBindViewHolder(holder: PostItemViewHolder, position: Int) {
         val post = posts[position]
-        holder.view.imageView.setImageResource(post.image)
-        holder.view.profile_imageView.setImageResource(post.profileImage)
-        holder.view.textView.text = post.username
+        //holder.view.imageView.setImageResource(post.image)
+        //holder.view.profile_imageView.setImageResource(post.profileImage)
+        //holder.view.textView.text = post.username
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostItemViewHolder {
