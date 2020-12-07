@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.leafy.R
 import com.leafy.models.PlantUnit
+import com.leafy.repository.Status
 import com.leafy.ui.plantunitdetails.PlantUnitDetailsActivity
 import kotlinx.android.synthetic.main.fragment_units.*
 
@@ -44,6 +45,11 @@ class UnitsFragment : Fragment(), OnClickPlantUnitItemListener {
 
     private fun setupObservers() {
         viewModel.plantUnits.observe(viewLifecycleOwner, Observer {
+            when (it.status) {
+                Status.ERROR -> progressBar.visibility = View.GONE
+                Status.LOADING -> progressBar.visibility = View.VISIBLE
+                Status.SUCCESS -> progressBar.visibility = View.GONE
+            }
             adapter.items = it.data ?: listOf<PlantUnit>()
         })
     }

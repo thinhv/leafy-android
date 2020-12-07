@@ -11,9 +11,14 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import com.leafy.R
 import com.leafy.UserViewModel
+import com.leafy.extensions.dismissKeyboard
 import com.leafy.repository.Resource
 import com.leafy.repository.Status
+import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_register.*
+import kotlinx.android.synthetic.main.fragment_register.et_email
+import kotlinx.android.synthetic.main.fragment_register.et_password
+import kotlinx.android.synthetic.main.layout_progress_bar_with_text.view.*
 
 class RegisterFragment : Fragment() {
     private lateinit var userViewModel: UserViewModel
@@ -30,6 +35,8 @@ class RegisterFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         btn_register.setOnClickListener {
+            requireActivity().dismissKeyboard()
+
             val email = et_email.text.toString()
             val username = et_username.text.toString()
             val password = et_password.text.toString()
@@ -59,15 +66,21 @@ class RegisterFragment : Fragment() {
                     Status.ERROR -> {
                        btn_register.isEnabled = true
                        Snackbar.make(view, it.message ?: "", Snackbar.LENGTH_LONG).show()
+                        signup_progressBar.visibility = View.GONE
                     }
 
                     Status.LOADING -> {
                         btn_register.isEnabled = false
+                        signup_progressBar.visibility = View.VISIBLE
                     }
 
                     Status.SUCCESS -> {
+                        et_email.text.clear()
+                        et_username.text.clear()
+                        et_password.text.clear()
                         btn_register.isEnabled = true
                         Snackbar.make(view, "Register successfully!", Snackbar.LENGTH_LONG).show()
+                        signup_progressBar.visibility = View.GONE
                     }
                 }
             })
