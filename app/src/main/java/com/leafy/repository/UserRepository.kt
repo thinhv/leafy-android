@@ -98,21 +98,28 @@ class UserRepositoryImpl: UserRepository {
 
     override fun getProfile(): LiveData<Resource<UserProfileQuery.UserProfile>> {
         mutableUserProfile.value = Resource.loading(null)
-        val query = UserProfileQuery(username = "nhim")
-        apollo.query(query).enqueue(object : ApolloCall.Callback<UserProfileQuery.Data>() {
-            override fun onFailure(e: ApolloException) {
-                mutableUserProfile.postValue(Resource.error(e.message ?: "Unknown Error", null))
+        return Transformations.switchMap(localUserData, { userdata ->
+            if (userdata?.username == null) {
+                return@switchMap MutableLiveData<Resource<UserProfileQuery.UserProfile>>().apply { postValue(Resource.error("Username not found", null)) }
             }
 
-            override fun onResponse(response: com.apollographql.apollo.api.Response<UserProfileQuery.Data>) {
-                response.errors?.let {
-                    mutableUserProfile.postValue(Resource.error(it.first().message, null))
-                } ?: {
-                    mutableUserProfile.postValue(Resource.success(response.data?.userProfile))
+            val query = UserProfileQuery(username = userdata.username)
+            apollo.query(query).enqueue(object : ApolloCall.Callback<UserProfileQuery.Data>() {
+                override fun onFailure(e: ApolloException) {
+                    mutableUserProfile.postValue(Resource.error(e.message ?: "Unknown Error", null))
+                }
 
-                }()
-            }
+                override fun onResponse(response: com.apollographql.apollo.api.Response<UserProfileQuery.Data>) {
+                    response.errors?.let {
+                        mutableUserProfile.postValue(Resource.error(it.first().message, null))
+                    } ?: {
+                        mutableUserProfile.postValue(Resource.success(response.data?.userProfile))
+
+                    }()
+                }
+            })
+
+            return@switchMap this.mutableUserProfile
         })
-        return mutableUserProfile
     }
 }
