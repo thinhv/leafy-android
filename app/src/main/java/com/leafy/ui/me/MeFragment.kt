@@ -8,8 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.leafy.R
+import com.leafy.UserViewModel
+import com.leafy.models.User
 import com.leafy.ui.addplant.AddPlantActivity
 import kotlinx.android.synthetic.main.fragment_me.*
 
@@ -17,6 +20,7 @@ import kotlinx.android.synthetic.main.fragment_me.*
 class MeFragment : Fragment() {
 
     private lateinit var meViewModel: MeViewModel
+    private lateinit var userViewModel: UserViewModel
     private lateinit var adapter: DashboardListAdapter
     private val picId = 123
 
@@ -27,6 +31,7 @@ class MeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         meViewModel = ViewModelProviders.of(this).get(MeViewModel::class.java)
+        userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_me, container, false)
         return root
     }
@@ -36,18 +41,19 @@ class MeFragment : Fragment() {
 
 
 
-        button_add.setOnClickListener {
-            activity?.let {
-                val add_plant_intent = Intent(it, AddPlantActivity::class.java)
-                it.startActivity(add_plant_intent)
-            }
-
-
-
-
-        }
+//        button_add.setOnClickListener {
+//            activity?.let {
+//                val add_plant_intent = Intent(it, AddPlantActivity::class.java)
+//                it.startActivity(add_plant_intent)
+//            }
+//        }
 //        setupAdapter()
 //        setupObservers()
+
+        button_logout.setOnClickListener {
+            userViewModel.logout()
+
+        }
     }
 
 //    private fun setupObservers() {

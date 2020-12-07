@@ -20,6 +20,6 @@ class UserViewModel: ViewModel() {
     }
 
     fun logout() {
-
+        return userRepository.logout()
     }
 }
