@@ -65,7 +65,9 @@ class MeFragment : Fragment() {
 
     private fun setupObservers() {
         userViewModel.getProfile().observe(viewLifecycleOwner, Observer {
-            postListAdapter.posts = it.data?.plants ?: listOf()
+            val posts = it.data?.plants ?: listOf()
+            postListAdapter.posts = posts
+            text_trophy.text = "Congratulations! You have collected ${posts.size} plants!"
         })
     }
 
